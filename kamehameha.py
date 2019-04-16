@@ -68,6 +68,7 @@ while True:
         play_file("%s.wav" % index)
         increment_index()
     if buttonB.value:
+        audio.stop()        
         index = 0
     if(index==4 or index in range(0,2)):
         pixels.fill((0,0,0))
