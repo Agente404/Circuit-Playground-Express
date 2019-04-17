@@ -1,6 +1,7 @@
 import time
 import board
 import audioio
+import touchio
 import neopixel
 import digitalio
 
@@ -13,12 +14,14 @@ pixels.show()
 speaker_enable = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
 speaker_enable.switch_to_output(value=True)
 
-buttonA = digitalio.DigitalInOut(board.BUTTON_A)
-buttonA.direction = digitalio.Direction.INPUT
-buttonA.pull = digitalio.Pull.DOWN
-buttonB = digitalio.DigitalInOut(board.BUTTON_B)
-buttonB.direction = digitalio.Direction.INPUT
-buttonB.pull = digitalio.Pull.DOWN
+start_pin = touchio.TouchIn(board.A5)
+#start_pin = digitalio.DigitalInOut(board.BUTTON_B)
+#start_pin.direction = digitalio.Direction.INPUT
+#start_pin.pull = digitalio.Pull.DOWN
+
+reset_pin = digitalio.DigitalInOut(board.BUTTON_B)
+reset_pin.direction = digitalio.Direction.INPUT
+reset_pin.pull = digitalio.Pull.DOWN
 
 index = 0
 
@@ -57,18 +60,19 @@ def play_file(filename):
                 pixels.show()
                 time.sleep(0.25)
                 
-                if buttonA.value:
+                if start_pin.value:
                     audio.stop()
                     increment_index()
                     play_file("%s.wav" % index)
+                
                 pass            
 
 while True:
-    if buttonA.value:
+    if start_pin.value:
         play_file("%s.wav" % index)
         increment_index()
-    if buttonB.value:
-        audio.stop()        
+    if reset_pin.value:
+        audio.stop()
         index = 0
     if(index==4 or index in range(0,2)):
         pixels.fill((0,0,0))
