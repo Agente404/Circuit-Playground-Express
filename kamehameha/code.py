@@ -14,7 +14,7 @@ pixels.show()
 speaker_enable = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
 speaker_enable.switch_to_output(value=True)
 
-start_pin = touchio.TouchIn(board.A5)
+start_pin = touchio.TouchIn(board.A3)
 #start_pin = digitalio.DigitalInOut(board.BUTTON_B)
 #start_pin.direction = digitalio.Direction.INPUT
 #start_pin.pull = digitalio.Pull.DOWN
